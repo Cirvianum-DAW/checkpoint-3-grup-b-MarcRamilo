@@ -4,21 +4,28 @@ async function request(paramatra) {
 try {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${paramatra}`);
     if (!response.ok) {
+        const errorText = document.getElementById('error');
+        errorText.textContent = "Pokemon no trobat";
       throw new Error('Failed to fetch weather data');
     }
     const data = await response.json();
     // console.log(data);
     return data;
   } catch (error) {
+    const errorText = document.getElementById('error');
+    errorText.textContent = "Pokemon no trobat";
     throw error;
   }
 }
 
 async function requestHability(param){
     try {
-        const response = await fetch(`https://pokeapi.co/api/v2/ability/${param}`);
+        const response = await fetch(param);
         if (!response.ok) {
+            const errorText = document.getElementById('error');
+            errorText.textContent = "Pokemon no trobat";
           throw new Error('Failed to fetch weather data');
+          
         }
         const data = await response.json();
         // console.log(data);
@@ -27,11 +34,13 @@ async function requestHability(param){
         throw error;
       }
 }
-async function habilitats(id){
+async function habilitatsTransform(id){
     try{
         const habilitats = await requestHability(id);
-        return habilitats;
+        return habilitats.effect_entries[1];
     } catch(e){
+        const errorText = document.getElementById('error');
+        errorText.textContent = "Pokemon no trobat";
         throw e;
     }
 }
@@ -54,6 +63,8 @@ async function getInfo(info){
 
         return objecte;
     } catch (e){
+        const errorText = document.getElementById('error');
+        errorText.textContent = "Pokemon no trobat";
         throw e;
     }
 }
@@ -62,17 +73,32 @@ async function getDescription(info){
         const data = await request(info);
         return objecte;
     } catch (e){
+        const errorText = document.getElementById('error');
+        errorText.textContent = "Pokemon no trobat";
         throw e;
     }
 }
 
-document.addEventListener('DOMContentLoaded', async function (event)  {
-    const pokemon = await getInfo('132');
+
+
+
+
+document
+.getElementById('searchPokemon')
+.addEventListener('submit', async function (event) {
+  event.preventDefault();
+
+    const id = document.getElementById('pokemonId');
+    const pokemonId = id.value;
+    const pokemon = await getInfo(pokemonId);
     document.getElementById('name').innerHTML =('Nom:' + pokemon.name);
      document.getElementById('height').innerHTML =('Heigth: ' + pokemon.height);
      document.getElementById('weight').innerHTML =('Weigth: ' +pokemon.weight);
     habilitats = pokemon.habilitats;
-    const hab = pokemon.habilitats.map((i) => i);
+    const habURL = pokemon.habilitats.map((i) => i.ability.url);
+   
+       const description = await habilitatsTransform(habURL[0]);
+   console.log(description)
     document.getElementById('sprite').src = pokemon.sprites.back_default; 
 
     habilitats.forEach(element => {
@@ -82,7 +108,10 @@ document.addEventListener('DOMContentLoaded', async function (event)  {
         const titol = document.querySelector('h4');
         titol.appendChild(h4);
 
-        const description = document.createElement('p');
+        const descriptionElement = document.createElement('p');
+        descriptionElement.textContent = description.effect;
+        const descriptionHTML = document.getElementById('description');
+        descriptionHTML.appendChild(descriptionElement);
         //document.querySelector('h4').innerHTML =(element.ability.name);
         //description.textContent = element.ability;
         //const descripcioHTML = document.getElementById('description');
@@ -90,8 +119,5 @@ document.addEventListener('DOMContentLoaded', async function (event)  {
     });
     //console.log(habilitats)
 
-
-    
 })
-
 

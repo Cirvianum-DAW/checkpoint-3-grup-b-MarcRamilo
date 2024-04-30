@@ -7,6 +7,24 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
+    <p id="error" style="background-color: red;"></p>
+    <form id="searchPokemon">
+      <label>Introdueix un nom o id del pokemon</label>
+      <input
+            type="text"
+            id="pokemonId"
+            name="pokemonId"
+            class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Pokemon"
+          />
+          <button
+          type="submit"
+          class="px-4 py-2 bg-blue-500 text-white rounded-md"
+        >
+          Enviar
+        </button>
+        
+    </form>
     <div
       id="pokemon"
       class="container mx-auto bg-white rounded-lg shadow-lg p-4 w-1/4"

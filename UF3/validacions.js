@@ -3,8 +3,8 @@
 async function request() {
   try {
     const res = await fetch("./productes.js");
-    //const data = await res.json();
-    //console.log(res);
+    const data = 
+    console.log(res);
     return res;
   } catch (e) {
     console.error('Error', e);
