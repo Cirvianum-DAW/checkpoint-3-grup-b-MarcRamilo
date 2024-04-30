@@ -15,17 +15,37 @@ try {
 }
 
 // request('ditto');
+const pokemonsSelected = [];
 
 async function getInfo(info){
     try{
         const data = await request(info);
-        console.log(data);
-        const objecte = data.map((i) =>({
-            id: i.
-        }))
+        // console.log(data);
+        const objecte = {
+            id: data.id,
+            name: data.name,
+            height: data.height,
+            habilitats:data.abilities,
+            sprites: data.sprites
+        }
+       // console.log(objecte);
+
+        return objecte;
     } catch (e){
-        throw error;
+        throw e;
     }
 }
+document.addEventListener('DOMContentLoaded', async function (event)  {
+    const pokemon = await getInfo('132');
+    const name = document.getElementById('name');
+    const height = document.getElementById('height');
+    const weight = document.getElementById('weight');
+    
 
-getInfo('ditto');
+
+    console.log(id)
+    div.appendChild(id)
+})
+
+
+getInfo('131');
