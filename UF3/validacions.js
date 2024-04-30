@@ -1,8 +1,11 @@
 // A continuació et mostro algunes idees per poder començar a organitzar el teu codi.
+const products = require('./data.js');
 
+//validacions.js:2 Uncaught ReferenceError: require is not defined
+//  at validacions.js:2:18
 async function request() {
   try {
-    const res = await fetch("./productes.js");
+    const res = await products;
     console.log(res);
     return res;
   } catch (e) {

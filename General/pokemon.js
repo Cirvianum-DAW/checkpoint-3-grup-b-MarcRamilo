@@ -4,7 +4,7 @@ async function request(paramatra) {
   try {
     const response = await fetch(
       `https://pokeapi.co/api/v2/pokemon/${paramatra}`
-    );
+    ); //Fem la peiticó a la API
     if (!response.ok) {
       const errorText = document.getElementById("error");
       errorText.textContent = "Pokemon no trobat";
@@ -20,7 +20,7 @@ async function request(paramatra) {
   }
 }
 
-async function requestHability(param) {
+async function requestHability(param) { // Funció per agafar les habilitats que té el pokemon
   try {
     const response = await fetch(param);
     if (!response.ok) {
@@ -35,7 +35,7 @@ async function requestHability(param) {
     throw error;
   }
 }
-async function habilitatsTransform(id) {
+async function habilitatsTransform(id) { //Agafa les URL de les habilitats i fa un fetch per agafar la info
   try {
     const habilitats = await requestHability(id);
     return habilitats.effect_entries[1];
@@ -48,7 +48,7 @@ async function habilitatsTransform(id) {
 // request('ditto');
 const pokemonsSelected = [];
 
-async function getInfo(info) {
+async function getInfo(info) { // Agafem al info dels pokemons
   try {
     const data = await request(info);
     // console.log(data);
@@ -69,7 +69,7 @@ async function getInfo(info) {
     throw e;
   }
 }
-async function getDescription(info) {
+async function getDescription(info) { //Agafaem la descripció dels pokemons
   try {
     const data = await request(info);
     return objecte;
@@ -85,22 +85,22 @@ document
   .addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const id = document.getElementById("pokemonId");
-    const pokemonId = id.value;
-    const pokemon = await getInfo(pokemonId);
-    if (pokemon.name == undefined) {
-      const errorText = document.getElementById("error");
-      errorText.style.backgroundColor = "red";
-      errorText.textContent = "Pokemon no trobat";
-      document.getElementById("name").innerHTML = "";
-      document.getElementById("height").innerHTML =  "";
-      document.getElementById("weight").innerHTML =  "";
-      document.getElementById("sprite").src = "";
-      document.getElementById("description").innerHTML = "";
+    const id = document.getElementById("pokemonId"); //Agafem el id
+    const pokemonId = id.value; 
+    const pokemon = await getInfo(pokemonId); //Fem el fetch per agafar les dades
+    if (pokemon.name == undefined) { //Si nom retorna undefined vol dir que no troba el pokemon
+      const errorText = document.getElementById("error"); //Agafem el element error
+      errorText.style.backgroundColor = "red"; //Li canviem el bg
+      errorText.textContent = "Pokemon no trobat"; // Li assignem el content
+      document.getElementById("name").innerHTML = ""; // Buidem els camps
+      document.getElementById("height").innerHTML =  "";// Buidem els camps
+      document.getElementById("weight").innerHTML =  "";// Buidem els camps
+      document.getElementById("sprite").src = "";// Buidem els camps
+      document.getElementById("description").innerHTML = "";// Buidem els camps
 
     }
-    document.getElementById("name").innerHTML = "Nom:" + pokemon.name;
-    document.getElementById("height").innerHTML = "Heigth: " + pokemon.height;
+    document.getElementById("name").innerHTML = "Nom:" + pokemon.name; //Agafem el nom i li inserim el camp
+    document.getElementById("height").innerHTML = "Heigth: " + pokemon.height; //Agafem el heigth i li inserim el camp
     document.getElementById("weight").innerHTML = "Weigth: " + pokemon.weight;
     habilitats = pokemon.habilitats;
     const habURL = pokemon.habilitats.map((i) => i.ability.url);

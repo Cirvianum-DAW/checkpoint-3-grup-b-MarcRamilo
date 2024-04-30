@@ -1,4 +1,4 @@
-import { request } from './validacions.js';
+import { products } from './validacions.js';
 
 
 // Aquest index només serveix per provar algunes funcions si vols fer ús de la consola
@@ -6,8 +6,8 @@ import { request } from './validacions.js';
 
 async function main() {
   try {
-    const req = await request();
-    console.log('req', request);
+    const req = await products();
+    console.log('req', products);
   } catch (error) {
     console.error(error);
   }
