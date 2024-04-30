@@ -10,3 +10,5 @@ const products = [
   { category: "Llar", price: 79.99, name: "Torradora" },
   { category: "Llar", price: 199.99, name: "Aspiradora" },
 ];
+
+module.exports = products;
